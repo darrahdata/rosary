@@ -757,7 +757,7 @@ body.voice-active #prayer-text .pw.spoken { color: var(--blue-dark); }
     </button>
   </div>
 
-  <div class="status-bar" id="status-bar">Tap &ldquo;next&rdquo; or use voice to advance</div>
+  <div class="status-bar" id="status-bar">Tap, use arrow keys, or use voice to advance</div>
   <div style="text-align:center; margin-top:0.65rem;">
     <a class="video-link-small" href="https://meet.google.com/kjz-oeov-nuj" target="_blank" rel="noopener">
       <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1379,6 +1379,22 @@ function updateStatus(msg, active) {
   el.textContent = msg;
   el.className = 'status-bar' + (active ? ' active' : '');
 }
+
+// ── Keyboard navigation ─────────────────────────────
+document.addEventListener('keydown', (e) => {
+  // Only on the prayer screen, and don't hijack typing in inputs
+  if (!document.getElementById('screen-prayer').classList.contains('active')) return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault();
+    nextBead();
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault();
+    prevBead();
+  }
+});
 
 // ── Init ────────────────────────────────────────────
 renderTypeList();
