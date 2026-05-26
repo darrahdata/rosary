@@ -4,328 +4,464 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Rosary — A Contemplative Companion</title>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'EB Garamond', Georgia, serif;
-    background: #1a1410;
-    color: #e8dcc8;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 1rem;
-  }
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 2rem;
-    letter-spacing: 0.15em;
-    color: #c9a96e;
-    text-align: center;
-    margin-bottom: 0.25rem;
-  }
-  .subtitle {
-    font-style: italic;
-    font-size: 0.9rem;
-    color: #8a7a62;
-    text-align: center;
-    margin-bottom: 2rem;
-    letter-spacing: 0.05em;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .screen { display: none; width: 100%; max-width: 560px; }
-  .screen.active { display: block; }
+:root {
+  --ivory:        #f8f5f0;
+  --ivory-dark:   #eee9e0;
+  --ivory-border: #d8d2c8;
+  --white:        #ffffff;
+  --blue:         #4a6fa5;
+  --blue-dark:    #2c4a7c;
+  --blue-mid:     #3d5c8e;
+  --blue-light:   #8aaac8;
+  --blue-pale:    #edf2f8;
+  --blue-border:  #b8cce0;
+  --text:         #1e2d40;
+  --text-muted:   #6a7d8f;
+  --text-light:   #9aaab8;
+}
 
-  .setup-section { margin-bottom: 1.5rem; }
-  .setup-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #8a7a62;
-    margin-bottom: 0.75rem;
-  }
-  .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-  .option-btn {
-    background: #2a2018;
-    border: 1px solid #3d3020;
-    color: #c8b898;
-    font-family: 'EB Garamond', serif;
-    font-size: 0.95rem;
-    padding: 0.75rem 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    text-align: left;
-    transition: all 0.2s;
-    line-height: 1.3;
-  }
-  .option-btn:hover { border-color: #c9a96e; color: #e8dcc8; }
-  .option-btn.selected { border-color: #c9a96e; background: #2f2416; color: #c9a96e; }
-  .option-btn small { display: block; font-size: 0.78rem; color: #6a5c48; margin-top: 2px; font-style: italic; }
-  .option-btn.selected small { color: #8a7055; }
-  .mystery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: var(--ivory);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.25rem 1.25rem 5rem;
+}
 
-  .start-btn {
-    width: 100%;
-    padding: 1rem;
-    background: #c9a96e;
-    color: #1a1410;
-    border: none;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-top: 1.5rem;
-    transition: background 0.2s;
-  }
-  .start-btn:hover { background: #d4b87a; }
-  .start-btn:disabled { background: #4a3c28; color: #6a5c48; cursor: default; }
+/* ── Header ─────────────────────────────────────── */
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.app-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  letter-spacing: 0.1em;
+  color: var(--blue-dark);
+}
+.app-header p {
+  font-style: italic;
+  font-size: 0.97rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+.header-rule {
+  width: 44px;
+  height: 2px;
+  background: var(--blue);
+  opacity: 0.3;
+  margin: 0.9rem auto 0;
+  border-radius: 1px;
+}
 
-  .prayer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-  .mystery-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-style: italic;
-    color: #c9a96e;
-  }
-  .progress-text {
-    font-size: 0.8rem;
-    color: #6a5c48;
-    letter-spacing: 0.08em;
-  }
+.screen { display: none; width: 100%; max-width: 520px; }
+.screen.active { display: block; }
 
-  #rosary-svg {
-    width: 100%;
-    max-width: 340px;
-    margin: 0.25rem auto 0.5rem;
-    display: block;
-    overflow: visible;
-  }
-  .rb-chain { fill: none; stroke: #2a2018; stroke-width: 1.5; }
-  .rb-bead { transition: filter 0.5s ease; }
-  .rb-bead circle {
-    fill: #211c13;
-    stroke: #3d3020;
-    stroke-width: 1.5;
-    transition: fill 0.5s ease, stroke 0.5s ease;
-  }
-  .rb-bead.done circle { fill: url(#grad-done); stroke: #9a6820; }
-  .rb-bead.current circle { fill: url(#grad-current); stroke: #c9a96e; }
-  .rb-bead.current { animation: bead-pulse 2s ease-in-out infinite; }
-  @keyframes bead-pulse {
-    0%,100% { filter: drop-shadow(0 0 4px rgba(201,169,110,0.5)); }
-    50%      { filter: drop-shadow(0 0 12px rgba(201,169,110,1)); }
-  }
-  .rb-cross { transition: filter 0.5s ease; }
-  .rb-cross line {
-    stroke: #3d3020;
-    stroke-width: 3.5;
-    stroke-linecap: round;
-    transition: stroke 0.5s ease;
-  }
-  .rb-cross.done line { stroke: #9a6820; }
-  .rb-cross.current line { stroke: #f0e8d8; }
-  .rb-cross.current { animation: bead-pulse 2s ease-in-out infinite; }
+/* ── Setup Screen ────────────────────────────────── */
+.setup-section { margin-bottom: 1.75rem; }
+.setup-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.85rem;
+}
 
-  .prayer-card {
-    background: #211c14;
-    border: 1px solid #3d3020;
-    border-radius: 6px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    min-height: 120px;
-  }
-  .prayer-type {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #8a7a62;
-    margin-bottom: 0.5rem;
-  }
-  .prayer-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    color: #c9a96e;
-    margin-bottom: 0.75rem;
-    font-style: italic;
-  }
-  .prayer-text {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #c8b898;
-  }
-  .mystery-text {
-    font-size: 0.9rem;
-    font-style: italic;
-    color: #8a7a62;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid #2f2416;
-  }
+.mystery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
-  .controls { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
-  .ctrl-btn {
-    flex: 1;
-    padding: 0.75rem;
-    border-radius: 4px;
-    font-family: 'EB Garamond', serif;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid #3d3020;
-  }
-  .btn-prev { background: transparent; color: #8a7a62; }
-  .btn-prev:hover { color: #c8b898; border-color: #5a4a30; }
-  .btn-next { background: #c9a96e; color: #1a1410; border-color: #c9a96e; }
-  .btn-next:hover { background: #d4b87a; }
+.mystery-card {
+  background: var(--white);
+  border: 1.5px solid var(--ivory-border);
+  border-radius: 10px;
+  padding: 1.1rem 1rem 1rem;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.07rem;
+  color: var(--text);
+  line-height: 1.3;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.mystery-card:hover {
+  border-color: var(--blue-border);
+  background: var(--blue-pale);
+  box-shadow: 0 2px 10px rgba(74,111,165,0.08);
+}
+.mystery-card.selected {
+  border-color: var(--blue);
+  background: var(--blue-pale);
+  color: var(--blue-dark);
+  box-shadow: 0 2px 14px rgba(74,111,165,0.14);
+}
+.mystery-card small {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 4px;
+}
+.mystery-card.selected small { color: var(--blue); }
 
-  .mic-btn {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    border: 1px solid #3d3020;
-    background: #2a2018;
-    color: #8a7a62;
-    font-size: 1.3rem;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-  .mic-btn:hover { border-color: #c9a96e; color: #c9a96e; }
-  .mic-btn.listening { border-color: #e8573a; color: #e8573a; animation: pulse 1.5s infinite; }
-  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(232,87,58,0)} 50%{box-shadow:0 0 0 6px rgba(232,87,58,0.2)} }
+.advance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
-  .status-bar {
-    font-size: 0.8rem;
-    color: #6a5c48;
-    text-align: center;
-    min-height: 1.2em;
-    font-style: italic;
-  }
-  .status-bar.active { color: #c9a96e; }
+.advance-btn {
+  background: var(--white);
+  border: 1.5px solid var(--ivory-border);
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.02rem;
+  color: var(--text);
+  text-align: left;
+  line-height: 1.3;
+  transition: border-color 0.2s, background 0.2s;
+}
+.advance-btn:hover { border-color: var(--blue-border); background: var(--blue-pale); }
+.advance-btn.selected {
+  border-color: var(--blue);
+  background: var(--blue-pale);
+  color: var(--blue-dark);
+}
+.advance-btn small {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 3px;
+}
+.advance-btn.selected small { color: var(--blue); }
 
-  .back-btn {
-    background: transparent;
-    border: none;
-    color: #6a5c48;
-    font-family: 'EB Garamond', serif;
-    font-size: 0.85rem;
-    cursor: pointer;
-    letter-spacing: 0.08em;
-    margin-bottom: 1rem;
-    padding: 0;
-  }
-  .back-btn:hover { color: #c8b898; }
+.start-btn {
+  width: 100%;
+  padding: 1.05rem 1.5rem;
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  margin-top: 1.75rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 3px 14px rgba(74,111,165,0.22);
+}
+.start-btn:hover { background: var(--blue-dark); box-shadow: 0 5px 18px rgba(44,74,124,0.28); }
+.start-btn:disabled {
+  background: var(--ivory-border);
+  color: var(--text-light);
+  cursor: default;
+  box-shadow: none;
+}
 
-  .complete-card {
-    background: #211c14;
-    border: 1px solid #3d3020;
-    border-radius: 6px;
-    padding: 2rem;
-    text-align: center;
-  }
-  .complete-card h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
-    color: #c9a96e;
-    font-weight: 300;
-    margin-bottom: 0.75rem;
-  }
-  .complete-card p { color: #8a7a62; font-style: italic; line-height: 1.6; }
-  .restart-btn {
-    margin-top: 1.5rem;
-    padding: 0.75rem 2rem;
-    background: transparent;
-    border: 1px solid #c9a96e;
-    color: #c9a96e;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-  .restart-btn:hover { background: #c9a96e; color: #1a1410; }
+/* ── Prayer Screen ───────────────────────────────── */
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'EB Garamond', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.back-btn:hover { color: var(--blue); }
 
-  hr.divider { border: none; border-top: 1px solid #2f2416; margin: 1rem 0; }
+.prayer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.mystery-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--blue-dark);
+}
+.progress-text {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+}
+
+#rosary-svg {
+  width: 100%;
+  max-width: 300px;
+  margin: 0.1rem auto 0.6rem;
+  display: block;
+  overflow: visible;
+}
+
+/* SVG bead styling */
+.rb-chain { fill: none; stroke: #c4cdd8; stroke-width: 1.2; }
+.rb-bead { transition: filter 0.45s; }
+.rb-bead circle {
+  fill: url(#grad-undone);
+  stroke: #c0bab2;
+  stroke-width: 1.2;
+  transition: fill 0.45s, stroke 0.45s;
+}
+.rb-bead.done circle { fill: url(#grad-done); stroke: #6a90b8; }
+.rb-bead.current circle { fill: url(#grad-current); stroke: #2c4a7c; stroke-width: 1.6; }
+.rb-bead.current { animation: bead-glow 2s ease-in-out infinite; }
+@keyframes bead-glow {
+  0%,100% { filter: drop-shadow(0 0 3px rgba(74,111,165,0.35)); }
+  50%      { filter: drop-shadow(0 0 9px rgba(74,111,165,0.75)); }
+}
+.rb-cross { transition: filter 0.45s; }
+.rb-cross line {
+  stroke: #c4cdd8;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke 0.45s;
+}
+.rb-cross.done line { stroke: var(--blue); }
+.rb-cross.current line { stroke: var(--blue-dark); }
+.rb-cross.current { animation: bead-glow 2s ease-in-out infinite; }
+
+.prayer-card {
+  background: var(--white);
+  border: 1px solid var(--ivory-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  min-height: 120px;
+  box-shadow: 0 1px 8px rgba(30,45,64,0.05);
+}
+.prayer-type {
+  font-size: 0.67rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 0.4rem;
+}
+.prayer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.55rem;
+  color: var(--blue-dark);
+  margin-bottom: 0.7rem;
+  font-style: italic;
+  line-height: 1.2;
+}
+.prayer-text {
+  font-size: 1.02rem;
+  line-height: 1.78;
+  color: var(--text);
+}
+.mystery-text {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--ivory-dark);
+}
+
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+.ctrl-btn {
+  flex: 1;
+  padding: 0.95rem 1rem;
+  border-radius: 10px;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 54px;
+}
+.btn-prev {
+  background: var(--white);
+  border: 1.5px solid var(--ivory-border);
+  color: var(--text-muted);
+}
+.btn-prev:hover { border-color: var(--blue-border); color: var(--blue); }
+.btn-next {
+  background: var(--blue);
+  border: 1.5px solid var(--blue);
+  color: var(--white);
+  box-shadow: 0 2px 10px rgba(74,111,165,0.22);
+}
+.btn-next:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+
+.mic-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ivory-border);
+  background: var(--white);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  box-shadow: 0 1px 4px rgba(30,45,64,0.06);
+}
+.mic-btn:hover { border-color: var(--blue-border); color: var(--blue); }
+.mic-btn.listening {
+  border-color: #d9533a;
+  color: #d9533a;
+  animation: mic-pulse 1.5s ease-in-out infinite;
+}
+@keyframes mic-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(217,83,58,0); }
+  50%      { box-shadow: 0 0 0 6px rgba(217,83,58,0.12); }
+}
+
+.status-bar {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  text-align: center;
+  min-height: 1.2em;
+  font-style: italic;
+}
+.status-bar.active { color: var(--blue); }
+
+/* ── Complete Screen ─────────────────────────────── */
+.complete-card {
+  background: var(--white);
+  border: 1px solid var(--ivory-border);
+  border-radius: 14px;
+  padding: 2.75rem 2rem;
+  text-align: center;
+  box-shadow: 0 2px 18px rgba(30,45,64,0.06);
+}
+.complete-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem;
+  color: var(--blue-dark);
+  font-weight: 400;
+  margin-bottom: 0.9rem;
+}
+.complete-rule {
+  width: 38px;
+  height: 1.5px;
+  background: var(--blue);
+  opacity: 0.28;
+  margin: 0 auto 1rem;
+  border-radius: 1px;
+}
+.complete-card p { color: var(--text-muted); font-style: italic; line-height: 1.7; }
+.restart-btn {
+  margin-top: 1.75rem;
+  padding: 0.85rem 2.25rem;
+  background: transparent;
+  border: 1.5px solid var(--blue);
+  color: var(--blue-dark);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  cursor: pointer;
+  border-radius: 10px;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+}
+.restart-btn:hover { background: var(--blue); color: var(--white); }
 </style>
 </head>
 <body>
 
-<h1>✦ The Rosary</h1>
-<p class="subtitle">A contemplative companion for prayer</p>
+<header class="app-header">
+  <h1>The Rosary</h1>
+  <p>A contemplative companion for prayer</p>
+  <div class="header-rule"></div>
+</header>
 
-<!-- Setup Screen -->
+<!-- ── Setup Screen ─────────────────────────────── -->
 <div class="screen active" id="screen-setup">
+
   <div class="setup-section">
     <div class="setup-label">Choose mysteries</div>
     <div class="mystery-grid">
-      <button class="option-btn" data-mystery="joyful" onclick="selectOption(this,'mystery')">
-        Joyful <small>Monday &amp; Saturday</small>
+      <button class="mystery-card" data-mystery="joyful" onclick="selectOption(this,'mystery')">
+        Joyful<small>Monday &amp; Saturday</small>
       </button>
-      <button class="option-btn" data-mystery="sorrowful" onclick="selectOption(this,'mystery')">
-        Sorrowful <small>Tuesday &amp; Friday</small>
+      <button class="mystery-card" data-mystery="sorrowful" onclick="selectOption(this,'mystery')">
+        Sorrowful<small>Tuesday &amp; Friday</small>
       </button>
-      <button class="option-btn" data-mystery="glorious" onclick="selectOption(this,'mystery')">
-        Glorious <small>Wednesday &amp; Sunday</small>
+      <button class="mystery-card" data-mystery="glorious" onclick="selectOption(this,'mystery')">
+        Glorious<small>Wednesday &amp; Sunday</small>
       </button>
-      <button class="option-btn" data-mystery="luminous" onclick="selectOption(this,'mystery')">
-        Luminous <small>Thursday</small>
+      <button class="mystery-card" data-mystery="luminous" onclick="selectOption(this,'mystery')">
+        Luminous<small>Thursday</small>
       </button>
     </div>
   </div>
+
   <div class="setup-section">
     <div class="setup-label">Advance beads by</div>
-    <div class="option-grid">
-      <button class="option-btn selected" data-advance="tap" onclick="selectOption(this,'advance')">
-        Tap / click <small>Manual advance</small>
+    <div class="advance-grid">
+      <button class="advance-btn selected" data-advance="tap" onclick="selectOption(this,'advance')">
+        Tap / click<small>Manual advance</small>
       </button>
-      <button class="option-btn" data-advance="voice" onclick="selectOption(this,'advance')">
-        Voice <small>Auto-advance as you pray</small>
+      <button class="advance-btn" data-advance="voice" onclick="selectOption(this,'advance')">
+        Voice<small>Auto-advance as you pray</small>
       </button>
     </div>
   </div>
+
   <button class="start-btn" id="start-btn" onclick="startRosary()" disabled>Begin</button>
 </div>
 
-<!-- Prayer Screen -->
+<!-- ── Prayer Screen ─────────────────────────────── -->
 <div class="screen" id="screen-prayer">
-  <button class="back-btn" onclick="showSetup()">← back</button>
+  <button class="back-btn" onclick="showSetup()">&#8592; back</button>
   <div class="prayer-header">
     <span class="mystery-name" id="mystery-label"></span>
     <span class="progress-text" id="progress-label"></span>
   </div>
+
   <svg id="rosary-svg" viewBox="0 0 340 430" xmlns="http://www.w3.org/2000/svg"></svg>
+
   <div class="prayer-card">
     <div class="prayer-type" id="prayer-type"></div>
     <div class="prayer-name" id="prayer-name"></div>
     <div class="prayer-text" id="prayer-text"></div>
     <div class="mystery-text" id="mystery-text" style="display:none"></div>
   </div>
+
   <div class="controls">
-    <button class="ctrl-btn btn-prev" onclick="prevBead()">← prev</button>
+    <button class="ctrl-btn btn-prev" onclick="prevBead()">&#8592; prev</button>
     <button class="mic-btn" id="mic-btn" onclick="toggleMic()" title="Toggle voice">
-      <i class="ti ti-microphone"></i>
+      <svg width="19" height="19" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="1" width="6" height="11" rx="3"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+        <line x1="12" y1="19" x2="12" y2="23"/>
+        <line x1="8" y1="23" x2="16" y2="23"/>
+      </svg>
     </button>
-    <button class="ctrl-btn btn-next" onclick="nextBead()">next →</button>
+    <button class="ctrl-btn btn-next" onclick="nextBead()">next &#8594;</button>
   </div>
-  <div class="status-bar" id="status-bar">Tap "next" or use voice to advance</div>
+
+  <div class="status-bar" id="status-bar">Tap &#8220;next&#8221; or use voice to advance</div>
 </div>
 
-<!-- Complete Screen -->
+<!-- ── Complete Screen ───────────────────────────── -->
 <div class="screen" id="screen-complete">
   <div class="complete-card">
     <h2>Rosary Complete</h2>
-    <hr class="divider">
-    <p>"The Rosary is the weapon for these times."<br><em>— Padre Pio</em></p>
+    <div class="complete-rule"></div>
+    <p>&#8220;The Rosary is the weapon for these times.&#8221;<br><em>&#8212; Padre Pio</em></p>
     <button class="restart-btn" onclick="showSetup()">Pray again</button>
   </div>
 </div>
@@ -351,30 +487,30 @@ const MYSTERIES = {
 };
 
 const PRAYERS = {
-  apostlesCreed: { type: 'Opening prayer', name: "Apostle's Creed", text: "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, His only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father almighty; from there He will come to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen." },
-  ourFather: { type: 'Our Father bead', name: 'Our Father', text: "Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen." },
-  hailMary: { type: 'Hail Mary bead', name: 'Hail Mary', text: "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen." },
-  gloryBe: { type: 'Glory Be', name: 'Glory Be', text: "Glory be to the Father, and to the Son, and to the Holy Spirit; as it was in the beginning, is now, and ever shall be, world without end. Amen." },
-  fatima: { type: 'Fatima Prayer', name: 'O My Jesus', text: "O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to Heaven, especially those most in need of Thy mercy. Amen." },
-  hailHolyQueen: { type: 'Closing prayer', name: 'Hail, Holy Queen', text: "Hail, Holy Queen, Mother of Mercy! Our life, our sweetness, and our hope! To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious Advocate, thine eyes of mercy toward us; and after this our exile show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary. Pray for us, O holy Mother of God, that we may be made worthy of the promises of Christ. Amen." }
+  apostlesCreed:  { type: 'Opening prayer',  name: "Apostles' Creed",   text: "I believe in God, the Father almighty, Creator of heaven and earth, and in Jesus Christ, His only Son, our Lord, who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried; He descended into hell; on the third day He rose again from the dead; He ascended into heaven, and is seated at the right hand of God the Father almighty; from there He will come to judge the living and the dead. I believe in the Holy Spirit, the holy catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen." },
+  ourFather:      { type: 'Our Father bead', name: 'Our Father',         text: "Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen." },
+  hailMary:       { type: 'Hail Mary bead',  name: 'Hail Mary',          text: "Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen." },
+  gloryBe:        { type: 'Glory Be',         name: 'Glory Be',           text: "Glory be to the Father, and to the Son, and to the Holy Spirit; as it was in the beginning, is now, and ever shall be, world without end. Amen." },
+  fatima:         { type: 'Fatima Prayer',    name: 'O My Jesus',         text: "O my Jesus, forgive us our sins, save us from the fires of hell, lead all souls to Heaven, especially those most in need of Thy mercy. Amen." },
+  hailHolyQueen:  { type: 'Closing prayer',  name: 'Hail, Holy Queen',   text: "Hail, Holy Queen, Mother of Mercy! Our life, our sweetness, and our hope! To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious Advocate, thine eyes of mercy toward us; and after this our exile show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary. Pray for us, O holy Mother of God, that we may be made worthy of the promises of Christ. Amen." }
 };
 
-function buildSequence(mysteryKey) {
-  const mysteries = MYSTERIES[mysteryKey].list;
+function buildSequence(key) {
+  const mysteries = MYSTERIES[key].list;
   let seq = [];
   seq.push({ ...PRAYERS.apostlesCreed, bead: 'cross' });
-  seq.push({ ...PRAYERS.ourFather, bead: 'large' });
-  seq.push({ ...PRAYERS.hailMary, bead: 'small', sub: 'For an increase in Faith' });
-  seq.push({ ...PRAYERS.hailMary, bead: 'small', sub: 'For an increase in Hope' });
-  seq.push({ ...PRAYERS.hailMary, bead: 'small', sub: 'For an increase in Charity' });
-  seq.push({ ...PRAYERS.gloryBe, bead: 'chain' });
+  seq.push({ ...PRAYERS.ourFather,     bead: 'large' });
+  seq.push({ ...PRAYERS.hailMary,      bead: 'small', sub: 'For an increase in Faith' });
+  seq.push({ ...PRAYERS.hailMary,      bead: 'small', sub: 'For an increase in Hope' });
+  seq.push({ ...PRAYERS.hailMary,      bead: 'small', sub: 'For an increase in Charity' });
+  seq.push({ ...PRAYERS.gloryBe,       bead: 'chain' });
   for (let d = 0; d < 5; d++) {
     seq.push({ ...PRAYERS.ourFather, bead: 'large', mystery: mysteries[d], decade: d + 1 });
     for (let h = 0; h < 10; h++) {
       seq.push({ ...PRAYERS.hailMary, bead: 'small', mystery: mysteries[d] });
     }
     seq.push({ ...PRAYERS.gloryBe, bead: 'chain', mystery: mysteries[d] });
-    seq.push({ ...PRAYERS.fatima, bead: 'chain', mystery: mysteries[d] });
+    seq.push({ ...PRAYERS.fatima,  bead: 'chain', mystery: mysteries[d] });
   }
   seq.push({ ...PRAYERS.hailHolyQueen, bead: 'chain' });
   return seq;
@@ -383,6 +519,7 @@ function buildSequence(mysteryKey) {
 let state = { mysteryKey: null, advanceMode: 'tap', sequence: [], currentIndex: 0, listening: false };
 let selections = { mystery: null, advance: 'tap' };
 let recog = null;
+let svgBuilt = false;
 
 function selectOption(btn, group) {
   document.querySelectorAll('[data-' + group + ']').forEach(b => b.classList.remove('selected'));
@@ -396,11 +533,11 @@ function updateStartBtn() {
 }
 
 function startRosary() {
-  state.mysteryKey = selections.mystery;
-  state.advanceMode = selections.advance;
-  state.sequence = buildSequence(state.mysteryKey);
+  state.mysteryKey   = selections.mystery;
+  state.advanceMode  = selections.advance;
+  state.sequence     = buildSequence(state.mysteryKey);
   state.currentIndex = 0;
-  state.listening = false;
+  state.listening    = false;
   svgBuilt = false;
   showScreen('screen-prayer');
   renderPrayer();
@@ -419,25 +556,25 @@ function showScreen(id) {
 
 function renderPrayer() {
   const step = state.sequence[state.currentIndex];
-  document.getElementById('mystery-label').textContent = MYSTERIES[state.mysteryKey].name;
+  document.getElementById('mystery-label').textContent  = MYSTERIES[state.mysteryKey].name;
   document.getElementById('progress-label').textContent = (state.currentIndex + 1) + ' / ' + state.sequence.length;
-  document.getElementById('prayer-type').textContent = step.type || '';
-  document.getElementById('prayer-name').textContent = step.name || '';
-  document.getElementById('prayer-text').textContent = step.text || '';
-  const mysteryEl = document.getElementById('mystery-text');
+  document.getElementById('prayer-type').textContent    = step.type || '';
+  document.getElementById('prayer-name').textContent    = step.name || '';
+  document.getElementById('prayer-text').textContent    = step.text || '';
+  const mystEl = document.getElementById('mystery-text');
   if (step.mystery) {
-    mysteryEl.style.display = 'block';
-    mysteryEl.textContent = (step.decade ? step.decade + '. ' : '') + step.mystery;
+    mystEl.style.display = 'block';
+    mystEl.textContent = (step.decade ? step.decade + '. ' : '') + step.mystery;
   } else if (step.sub) {
-    mysteryEl.style.display = 'block';
-    mysteryEl.textContent = step.sub;
+    mystEl.style.display = 'block';
+    mystEl.textContent = step.sub;
   } else {
-    mysteryEl.style.display = 'none';
+    mystEl.style.display = 'none';
   }
   renderBeads();
 }
 
-// ── SVG Rosary ───────────────────────────────────────────────────────────────
+// ── SVG Rosary ────────────────────────────────────
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const R_CX = 170, R_CY = 148, R_RX = 125, R_RY = 102, R_JY = 250;
 
@@ -449,7 +586,6 @@ const PENDANT_POS = [
   { seq: 1, y: 362, r: 7   },
 ];
 const OF_CIRCLE = new Set([0, 13, 26, 39, 52]);
-let svgBuilt = false;
 
 function mkEl(tag) { return document.createElementNS(SVG_NS, tag); }
 
@@ -469,23 +605,31 @@ function buildRosarySVG() {
 
   const defs = mkEl('defs');
   defs.innerHTML = `
-    <radialGradient id="grad-done" cx="38%" cy="32%" r="65%">
-      <stop offset="0%" stop-color="#e8c87a"/>
-      <stop offset="100%" stop-color="#6e3e08"/>
+    <radialGradient id="grad-undone" cx="35%" cy="28%" r="68%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="60%"  stop-color="#e8e4dc"/>
+      <stop offset="100%" stop-color="#beb8b0"/>
     </radialGradient>
-    <radialGradient id="grad-current" cx="35%" cy="28%" r="68%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="65%" stop-color="#ede0c8"/>
-      <stop offset="100%" stop-color="#b8a070"/>
+    <radialGradient id="grad-done" cx="35%" cy="28%" r="68%">
+      <stop offset="0%"   stop-color="#ddeaf8"/>
+      <stop offset="55%"  stop-color="#8aaac8"/>
+      <stop offset="100%" stop-color="#3d5c8e"/>
+    </radialGradient>
+    <radialGradient id="grad-current" cx="32%" cy="26%" r="70%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="45%"  stop-color="#c8dcf2"/>
+      <stop offset="100%" stop-color="#2c4a7c"/>
     </radialGradient>`;
   svg.appendChild(defs);
 
+  // Main ellipse chain
   const ell = mkEl('ellipse');
   ell.setAttribute('cx', R_CX); ell.setAttribute('cy', R_CY);
   ell.setAttribute('rx', R_RX); ell.setAttribute('ry', R_RY);
   ell.setAttribute('class', 'rb-chain');
   svg.appendChild(ell);
 
+  // Pendant chain lines
   const chainYs = [R_JY, ...PENDANT_POS.map(p => p.y), 383];
   for (let i = 0; i < chainYs.length - 1; i++) {
     const ln = mkEl('line');
@@ -495,21 +639,26 @@ function buildRosarySVG() {
     svg.appendChild(ln);
   }
 
+  // Cross (sequence index 0)
   const crossG = mkEl('g');
   crossG.setAttribute('id', 'rb-0');
   crossG.setAttribute('class', 'rb-cross');
   const vBar = mkEl('line');
-  vBar.setAttribute('x1', R_CX); vBar.setAttribute('y1', 383);
-  vBar.setAttribute('x2', R_CX); vBar.setAttribute('y2', 414);
+  vBar.setAttribute('x1', R_CX);      vBar.setAttribute('y1', 383);
+  vBar.setAttribute('x2', R_CX);      vBar.setAttribute('y2', 414);
   const hBar = mkEl('line');
-  hBar.setAttribute('x1', R_CX - 12); hBar.setAttribute('y1', 390);
-  hBar.setAttribute('x2', R_CX + 12); hBar.setAttribute('y2', 390);
+  hBar.setAttribute('x1', R_CX - 12); hBar.setAttribute('y1', 391);
+  hBar.setAttribute('x2', R_CX + 12); hBar.setAttribute('y2', 391);
   crossG.appendChild(vBar); crossG.appendChild(hBar);
   svg.appendChild(crossG);
 
+  // Junction bead at top of pendant (seq 71)
   addBead(svg, 71, R_CX, R_JY, 9);
+
+  // Pendant beads (seqs 1–5)
   for (const p of PENDANT_POS) addBead(svg, p.seq, R_CX, p.y, p.r);
 
+  // Circle beads (seqs 6–70), counter-clockwise from bottom junction
   const step = (2 * Math.PI) / 66;
   for (let i = 0; i < 65; i++) {
     const angle = Math.PI / 2 + (i + 1) * step;
@@ -551,6 +700,7 @@ function prevBead() {
   if (state.currentIndex > 0) { state.currentIndex--; renderPrayer(); }
 }
 
+// ── Voice Recognition ─────────────────────────────
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 function toggleMic() {
@@ -563,7 +713,7 @@ function toggleMic() {
 }
 
 function startListening() {
-  if (!SpeechRecognition) { updateStatus('Voice not supported — use Chrome or Safari', false); return; }
+  if (!SpeechRecognition) { updateStatus('Voice not supported — use Chrome or Edge', false); return; }
   if (recog) { try { recog.stop(); } catch(e){} }
   recog = new SpeechRecognition();
   recog.continuous = true;
@@ -572,7 +722,7 @@ function startListening() {
   recog.onstart = () => {
     state.listening = true;
     document.getElementById('mic-btn').classList.add('listening');
-    updateStatus('Listening… pray aloud to advance', true);
+    updateStatus('Listening — pray aloud to advance', true);
   };
   recog.onresult = (e) => {
     const last = e.results[e.results.length - 1];
